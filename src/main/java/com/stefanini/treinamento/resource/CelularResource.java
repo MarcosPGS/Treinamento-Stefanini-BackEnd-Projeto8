@@ -38,12 +38,12 @@ public class CelularResource {
 	
 	//EndPoint searchName
 	@GetMapping("/{nome}")
-	public ResponseEntity<List<Celular>> searchName(@PathVariable String nome){
-		List<Celular> celularEncontrado= celularService.searchName(nome);
-		if(celularEncontrado == null) {
+	public ResponseEntity<List<Celular>> searchByName(@PathVariable String nome){
+		List<Celular> celularesEncontrados= celularService.searchByName(nome);
+		if(celularesEncontrados == null) {
 			return ResponseEntity.ok(null);
 		}
-		return ResponseEntity.ok(celularEncontrado);
+		return ResponseEntity.ok(celularesEncontrados);
 	}
 	//EndPoint create
 	@PostMapping

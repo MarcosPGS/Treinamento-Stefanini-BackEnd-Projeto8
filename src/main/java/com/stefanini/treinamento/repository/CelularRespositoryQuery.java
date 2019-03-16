@@ -6,6 +6,7 @@ import com.stefanini.treinamento.entity.Celular;
 
 public interface CelularRespositoryQuery {
 
-	public List<Celular> buscarPorNome(String nome);
+	public List<Celular> searchByName(String nome);
 	public Celular buscarPorNomeUnico(String nome);
+	
 }

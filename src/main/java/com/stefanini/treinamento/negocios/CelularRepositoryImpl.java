@@ -8,12 +8,15 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.stefanini.treinamento.entity.Capa;
 import com.stefanini.treinamento.entity.Celular;
 import com.stefanini.treinamento.repository.CelularRespositoryQuery;
 
@@ -23,21 +26,22 @@ public class CelularRepositoryImpl implements CelularRespositoryQuery {
 	@PersistenceContext
 	private EntityManager manager;
 	@Override
-	public List<Celular> buscarPorNome(String nome) {
-		List<Celular> celularEncontrado = null;
+	public List<Celular> searchByName(String nome) {
+		List<Celular> celularesEncontrados = null;
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
 			CriteriaQuery<Celular> criteriaQuery = builder.createQuery(Celular.class);
 			Root<Celular>root =criteriaQuery.from(Celular.class);
+			Join<Celular, Capa>capas = root.join("capas",JoinType.INNER);
 			Predicate[] predicates =criearRestricao(nome,builder,root);
 			criteriaQuery.where(predicates);
 			
 			TypedQuery<Celular>typedQuery = manager.createQuery(criteriaQuery);
-			celularEncontrado = typedQuery.getResultList();
+			celularesEncontrados = typedQuery.getResultList();
 			
-			return celularEncontrado;
+			return celularesEncontrados;
 		} catch (Exception e) {
-			return celularEncontrado;
+			return celularesEncontrados;
 		}
 	}
 
@@ -75,5 +79,7 @@ public class CelularRepositoryImpl implements CelularRespositoryQuery {
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
+
+	
 
 }

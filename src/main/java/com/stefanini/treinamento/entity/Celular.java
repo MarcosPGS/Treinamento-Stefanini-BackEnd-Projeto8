@@ -35,7 +35,8 @@ public class Celular implements Serializable {
 	private String nome;
    
 	@Size(min=1, max=5)
-	@OneToMany(mappedBy = "idcelular",fetch = FetchType.LAZY,cascade= {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH})
+	@OneToMany(mappedBy = "idcelular",fetch = FetchType.LAZY,
+	cascade= {CascadeType.ALL},orphanRemoval=true)
 	private List<Capa> capas;
 	
 	public Celular() {

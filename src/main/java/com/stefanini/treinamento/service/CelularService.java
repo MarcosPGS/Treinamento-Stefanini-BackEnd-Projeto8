@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.stefanini.treinamento.entity.Capa;
 import com.stefanini.treinamento.entity.Celular;
 import com.stefanini.treinamento.exceptions.CelularDuplicadoException;
 import com.stefanini.treinamento.repository.CelularRepository;
@@ -22,8 +23,8 @@ public class CelularService {
 	
 	
 	//EndPoint searchName
-		public List<Celular> searchName(String nome){
-			return celularRepository.buscarPorNome(nome);
+		public List<Celular> searchByName(String nome){
+			return celularRepository.searchByName(nome);
 		}
 		
 	//EndPoint create
@@ -52,6 +53,12 @@ public class CelularService {
 	
 	//EndPoint update
 	public Celular update(Celular celular) {
+   		for (Capa c: celular.getCapas()) {	
+   			if (c.getIdCapa() == null) {
+   				c.setIdcelular(celular.getIdCelular());
+   			}
+   			
+		}
 	return celularRepository.save(celular);
 		
 	}
