@@ -57,8 +57,12 @@ public class CelularResource {
 	
 	//EndPoint update
 	@PutMapping
-	public ResponseEntity<Celular> update(@Valid @RequestBody Celular celular){
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(celularService.update(celular));
+	public ResponseEntity<Object> update(@Valid @RequestBody Celular celular){
+		try {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(celularService.update(celular));
+		} catch (CelularDuplicadoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
 	}
 	
 	//EndPoint delete

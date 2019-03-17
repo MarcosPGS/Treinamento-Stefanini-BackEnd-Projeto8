@@ -52,7 +52,13 @@ public class CelularService {
 	
 	
 	//EndPoint update
-	public Celular update(Celular celular) {
+	public Celular update(Celular celular) throws CelularDuplicadoException {
+		Celular celularEncontrado =celularRepository.buscarPorNomeUnico(celular.getNome());
+		if(celularEncontrado!= null) {
+			throw new CelularDuplicadoException("Celular Duplicado! ID: " + celularEncontrado.getIdCelular() + "  Nome: "+
+					celularEncontrado.getNome());
+		}
+			
    		for (Capa c: celular.getCapas()) {	
    			if (c.getIdCapa() == null) {
    				c.setIdcelular(celular.getIdCelular());
