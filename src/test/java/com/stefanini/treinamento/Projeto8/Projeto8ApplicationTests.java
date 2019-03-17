@@ -83,7 +83,12 @@ public class Projeto8ApplicationTests {
 		listaCapas.add(capa2);
 		encontrado.setCapas(listaCapas);
 		
-		cs.update(encontrado);  
+		try {
+			cs.update(encontrado);
+		} catch (CelularDuplicadoException e) {
+			
+			e.printStackTrace();
+		}  
 
 		
 	}
